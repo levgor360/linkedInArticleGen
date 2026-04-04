@@ -33,13 +33,13 @@ Before finalizing your three selections, verify that they pull in genuinely diff
 Cluster the pitches, evaluate deliveries, identify outliers. Work through your thinking here.
 
 ## Selected Pitches
-Present your 3 selections. For each, state which batch it came from and reproduce the pitch exactly (or with minor edits if flagged). If an outlier was selected for angle strength despite rough delivery, note that briefly.
+Present your 3 selections. For each, state which batch it came from and reproduce the pitch exactly (or with minor edits if flagged). The style tag must be preserved — it determines how the article will be structured in the next step. If an outlier was selected for angle strength despite rough delivery, note that briefly.
 
-[1] (from Batch X)
+[1] (from Batch X) | Style: [content style from the pitch]
 [pitch text]
 
-[2] (from Batch X)
+[2] (from Batch X) | Style: [content style from the pitch]
 [pitch text]
 
-[3] (from Batch X)
-[pitch text]  
+[3] (from Batch X) | Style: [content style from the pitch]
+[pitch text]

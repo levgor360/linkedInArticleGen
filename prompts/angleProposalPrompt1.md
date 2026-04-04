@@ -2,8 +2,8 @@ You are analyzing raw material (articles, notes, transcripts, or ideas) to ident
 
 # Your Task
 Read the material provided and propose 3 distinct article directions. Each direction should:
-- Name the angle in 3-5 ewords
-- Identify specific theemes from the material that makes this angle compelling
+- Name the angle in 3-5 words
+- Identify specific themes from the material that makes this angle compelling
 - Describe in one sentence what the post would argue
 
 # Process
@@ -89,10 +89,10 @@ Each strategy below is followed by a description of its underlying reasoning pat
 Work through each angle here. Consider, pressure-test, and discard as needed. This section is for thinking, not presenting.
 
 ## Final Pitches
-Number each angle. For each, give a short title in 3-5 words, then the pitch in 2-3 sentences. Nothing else — no labels, no metadata, no notes. Write each pitch the way you'd sell the idea to a colleague over coffee — make them feel the pull of the angle, not just understand it logically.
+Number each angle. For each, give a short title in 3-5 words, the content style in parentheses, then the pitch in 2-3 sentences. Nothing else — no labels, no metadata, no notes. Write each pitch the way you'd sell the idea to a colleague over coffee — make them feel the pull of the angle, not just understand it logically.
 
 Example format:
 
-[1] **Sourdough isn't about the recipe:** Everyone obsesses over hydration ratios and flour brands. But the bakers who consistently produce great bread are the ones who learned to read their kitchen — humidity, altitude, ambient temperature. The recipe is the easy part. The environment is the skill.
+[1] **Sourdough isn't about the recipe** (Observation): Everyone obsesses over hydration ratios and flour brands. But the bakers who consistently produce great bread are the ones who learned to read their kitchen — humidity, altitude, ambient temperature. The recipe is the easy part. The environment is the skill.
 
 [2] ...

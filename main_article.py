@@ -3,8 +3,8 @@ import sys
 import time
 import re
 
-# Unset proxy env vars to avoid connection issues
-for var in ("ALL_PROXY", "all_proxy", "HTTPS_PROXY", "https_proxy", "HTTP_PROXY", "http_proxy"):
+# Unset ALL_PROXY to avoid connection issues (keep http/https proxy for T430)
+for var in ("ALL_PROXY", "all_proxy"):
     os.environ.pop(var, None)
 
 from dotenv import load_dotenv
@@ -142,7 +142,7 @@ def main():
     client = anthropic.Anthropic()
 
     angle_prompt = read_prompt("angleProposalPrompt1.md")
-    supervisor_prompt = read_prompt("supervisorPrompt.md")
+    supervisor_prompt = read_prompt("supervisorPrompt1.5.md")
 
     raw_material = get_multiline_input("Paste your raw material below:")
 
@@ -193,7 +193,7 @@ def main():
         selected_pitch = supervisor_output
 
     # --- Pitch modification loop ---
-    pitch_mod_prompt = read_prompt("pitchModPrompt.md")
+    pitch_mod_prompt = read_prompt("pitchModPrompt1.4.md")
     current_pitch = selected_pitch
     revision_count = 0
 
