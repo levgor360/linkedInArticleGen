@@ -1,0 +1,8 @@
+anthropic
+python-dotenv
+arize-phoenix-otel
+openinference-instrumentation-anthropic
+opentelemetry-api
+jupyter
+ipykernel
+arize-phoenix-client
