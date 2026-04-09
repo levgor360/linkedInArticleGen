@@ -328,6 +328,7 @@ Word choice — AVOID:
 - Hedging language: "it seems like," "one might argue," "it's worth considering"
 - LinkedIn-speak: "excited to share," "thrilled to announce," "diving deep"
 - Performative intelligence: "nuanced," "it's worth noting," "the implications are significant"
+- Rhetorical Q&A patterns: posing a short question and immediately answering it in the next sentence ("The problem? Nobody wrote it down." / "The ones who stay? They already knew what to ask.").
 
 Word choice — USE:
 - Direct, plain language

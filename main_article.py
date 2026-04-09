@@ -68,13 +68,23 @@ def extract_final_pitches(output):
 
 
 def extract_pitch_by_number(supervisor_output, number):
-    pattern = rf"\[{number}\]\s*\(from Batch \d+\)\s*\n(.*?)(?=\n\[\d+\]\s*\(from Batch|\Z)"
-    match = re.search(pattern, supervisor_output, re.DOTALL)
+    # Isolate the Selected Pitches section so we don't match [N] references
+    # scattered throughout the Analysis section.
+    selected_match = re.search(
+        r"##\s*Selected\s*Pitches\b", supervisor_output, re.IGNORECASE
+    )
+    if selected_match:
+        search_region = supervisor_output[selected_match.end():]
+    else:
+        search_region = supervisor_output
+
+    pattern = rf"(\[{number}\]\s*\(from Batch \d+\).*?)(?=\n\[\d+\]\s*\(from Batch|\Z)"
+    match = re.search(pattern, search_region, re.DOTALL)
     if match:
-        return f"[{number}] " + match.group(0).split("\n", 1)[-1].strip() if "\n" in match.group(0) else match.group(1).strip()
-    # Fallback: grab everything after [N] until next [N] or end
-    pattern2 = rf"\[{number}\].*?\n(.*?)(?=\n\[\d+\]|\Z)"
-    match2 = re.search(pattern2, supervisor_output, re.DOTALL)
+        return match.group(1).strip()
+    # Fallback: grab everything from [N] header line through body until next [N] or end
+    pattern2 = rf"(\[{number}\].*?)(?=\n\[\d+\]|\Z)"
+    match2 = re.search(pattern2, search_region, re.DOTALL)
     if match2:
         return match2.group(1).strip()
     return None
@@ -130,6 +140,28 @@ def run_supervisor(client, system_prompt, combined_pitches):
         max_tokens=16000,
         system=system_prompt,
         messages=[{"role": "user", "content": combined_pitches}],
+    )
+
+    output = message.content[0].text
+    print(output)
+    return output
+
+
+def run_article_generator(client, system_prompt, final_pitch, raw_material):
+    print(f"\n{'='*60}")
+    print(f"  ARTICLE GENERATION")
+    print(f"{'='*60}\n")
+
+    user_content = (
+        f"## Final Pitch\n\n{final_pitch}\n\n"
+        f"## Raw Material\n\n{raw_material}"
+    )
+
+    message = client.messages.create(
+        model=MODEL,
+        max_tokens=16000,
+        system=system_prompt,
+        messages=[{"role": "user", "content": user_content}],
     )
 
     output = message.content[0].text
@@ -225,6 +257,14 @@ def main():
     print(f"  FINAL PITCH")
     print(f"{'='*60}\n")
     print(final_pitch)
+
+    # --- Run article generator ---
+    article_gen_prompt = read_prompt("articleGeneratePrompt2.md")
+    print("\nGenerating article versions...")
+    with tracer.start_as_current_span("article_generation"):
+        article_versions = run_article_generator(
+            client, article_gen_prompt, final_pitch, raw_material
+        )
 
 
 if __name__ == "__main__":

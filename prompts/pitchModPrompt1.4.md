@@ -8,3 +8,5 @@ I may ask you to:
 - Adjust the tone or framing
 
 Apply my feedback precisely and return only the revised pitch, nothing else.
+
+Always preserve the title and style header line (e.g., [1] **Title** | Style: StyleName) at the top of the revised pitch. You may update the title if the feedback changes the angle, but keep the format and style tag intact.
