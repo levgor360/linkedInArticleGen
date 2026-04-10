@@ -169,6 +169,72 @@ def run_article_generator(client, system_prompt, final_pitch, raw_material):
     return output
 
 
+def expand_shortcodes(user_input):
+    SHORTCODE_EXPANSIONS = {
+        "-v": (
+            "Generate 3 variations of the following text. Retain the semantic meaning "
+            "but vary the delivery — sentence structure, word choice, style. Each variation "
+            "should explore a different direction for improvement, not three passes at the "
+            "same adjustment. Keep variations about the same length as the original. Text: {text}"
+        ),
+        "-s": (
+            "Offer a list of 5 synonyms for the following snippet. The alternatives should "
+            "be more fitting in context, improve clarity, or improve stylistic delivery. "
+            "Snippet: {text}"
+        ),
+        "-x": (
+            "Expand the following text. It has the right idea but lacks context or descriptors "
+            "for the reader to fully grasp what's being described. Draw from the raw material "
+            "to fill in the conceptual gaps. Don't add anecdotes, commentary, or restatement. "
+            "Just supply the specifics the reader needs. Return one version. Text: {text}"
+        ),
+        "-e": (
+            "The following text makes a claim that needs a concrete example to land. Suggest "
+            "one from the raw material, or mark an [EXAMPLE SLOT] if nothing fits. Return the "
+            "sentence with the example integrated. Text: {text}"
+        ),
+        "-r": (
+            "Reframe the following text. Find 3 completely different ways to make the same "
+            "point — not variations in wording, but variations in the move the text makes. "
+            "Shift the metaphor, perspective, scale, or emotional angle. Text: {text}"
+        ),
+        "-c": (
+            "Continue the following text. Write 1-2 sentences that follow naturally, in the "
+            "same voice and direction. Text: {text}"
+        ),
+        "-w": (
+            "Rewrite the following section from scratch using the raw material. Throw out the "
+            "current version and rebuild it, drawing on whichever details best serve the "
+            "section's purpose. Ensure it connects naturally to what comes before and after "
+            "in the draft. Return one version. Text: {text}"
+        ),
+    }
+
+    HELP_TEXT = (
+        "\n  Assembly Workbench Commands\n"
+        "  -v [text]  Generate 3 variations of the text\n"
+        "  -s [text]  Offer 5 synonyms for a snippet\n"
+        "  -x [text]  Expand text with detail from raw material\n"
+        "  -e [text]  Add a concrete example to a claim\n"
+        "  -r [text]  Reframe text from 3 different angles\n"
+        "  -c [text]  Continue text with 1-2 sentences\n"
+        "  -w [text]  Rewrite section from scratch using raw material\n"
+        "  -?         Show this help\n"
+    )
+
+    if re.search(r'-\?', user_input):
+        print(HELP_TEXT)
+        return None
+
+    match = re.search(r'(-[vsxercw])\s*\[(.+?)\]', user_input, re.DOTALL)
+    if match:
+        code = match.group(1)
+        text = match.group(2).strip()
+        return SHORTCODE_EXPANSIONS[code].format(text=text)
+
+    return user_input
+
+
 def main():
   with tracer.start_as_current_span("article_generation_pipeline"):
     client = anthropic.Anthropic()
