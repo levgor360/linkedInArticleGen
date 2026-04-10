@@ -235,6 +235,66 @@ def expand_shortcodes(user_input):
     return user_input
 
 
+def run_assemble_session(client, system_prompt, raw_material, article_versions):
+    print(f"\n{'='*60}")
+    print(f"  ASSEMBLY WORKBENCH")
+    print(f"{'='*60}\n")
+    print(article_versions)
+    print(f"\n{'='*60}")
+    print(f"  DRAFT VERSIONS END")
+    print(f"{'='*60}\n")
+
+    context_prefix = (
+        f"# Raw Material\n\n{raw_material}\n\n"
+        f"# Draft Versions\n\n{article_versions}\n\n"
+        f"# Instructions\n\n"
+    )
+
+    history = []
+    first_input = True
+
+    while True:
+        user_input = get_multiline_input(
+            "Assembly workbench (type 'next' to proceed, '-?' for help):"
+        )
+
+        if user_input.strip().lower() == "next":
+            break
+
+        expanded = expand_shortcodes(user_input)
+        if expanded is None:
+            continue
+
+        if first_input:
+            message_content = context_prefix + expanded
+            first_input = False
+        else:
+            message_content = expanded
+
+        history.append({"role": "user", "content": message_content})
+
+        response = client.messages.create(
+            model=MODEL,
+            max_tokens=16000,
+            system=system_prompt,
+            messages=history,
+        )
+        assistant_reply = response.content[0].text
+        print(assistant_reply)
+
+        history.append({"role": "assistant", "content": assistant_reply})
+
+    last_message = history[-1]["content"]
+    final_draft = re.sub(r"^#\s*Draft\s*\n+", "", last_message).strip()
+
+    print(f"\n{'='*60}")
+    print(f"  FINAL DRAFT")
+    print(f"{'='*60}\n")
+    print(final_draft)
+
+    return final_draft
+
+
 def main():
   with tracer.start_as_current_span("article_generation_pipeline"):
     client = anthropic.Anthropic()
@@ -330,6 +390,14 @@ def main():
     with tracer.start_as_current_span("article_generation"):
         article_versions = run_article_generator(
             client, article_gen_prompt, final_pitch, raw_material
+        )
+
+    # --- Assembly workbench ---
+    assemble_prompt = read_prompt("assemblePrompt3.md")
+    print("\nStarting assembly workbench...")
+    with tracer.start_as_current_span("assembly_workbench"):
+        final_draft = run_assemble_session(
+            client, assemble_prompt, raw_material, article_versions
         )
 
 
