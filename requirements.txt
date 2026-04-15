@@ -1,7 +1,7 @@
 anthropic
 python-dotenv
 arize-phoenix-otel
-openinference-instrumentation-anthropic
+opentelemetry-instrumentation-anthropic
 opentelemetry-api
 jupyter
 ipykernel
