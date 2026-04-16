@@ -4,24 +4,42 @@ You are fact-checking LinkedIn post pitches against the raw source material they
 
 For each pitch:
 
-1. **Extract every specific claim.** Identify each distinct factual assertion in the pitch — statistics, data points, characterizations of findings, described relationships, and stated implications. List them individually.
+1. **Extract every specific claim.** Identify each distinct factual assertion in the pitch — statistics, data points, characterizations of findings, described relationships, and stated implications. List them individually. Split compound claims into separate items (e.g., "X is a fact *and* it means Y" becomes two claims).
 
-2. **Verify each claim against the raw material.** For each claim, find the corresponding passage in the raw material. Quote or paraphrase what the source actually says. Then assess whether the pitch's version faithfully represents it.
+2. **Quote the source verbatim.** For each claim, locate the corresponding passage in the raw material and quote it directly — not a paraphrase. If there is no corresponding passage, state that explicitly. If the claim combines content from multiple passages, quote each one separately.
 
-3. **Check for common distortions.** For each claim, specifically ask whether any of the following apply:
+3. **Compare claim to quote at the level of wording.** Do not assess whether the claim is "in the same spirit" as the source. Assess whether the specific framing, scope, and implication of the claim match what the quoted source actually says. Pay particular attention to:
    - **Scope shift:** A finding measured in one context (e.g., across US states, within one sector, about macroeconomic indicators) presented as if it applies to a different context (e.g., organizational tools, all workers, individual companies). The stat is real but transplanted to a domain it wasn't measured in.
    - **Causation from correlation:** The source describes an association, co-occurrence, or temporal pattern, but the pitch presents one thing as causing another.
    - **Generalizing from a specific:** A finding about one occupation, example, sector, or population presented as if it applies universally. Watch for illustrative examples in the source (e.g., "an accountant might spend 60% of their time on...") being treated as general facts in the pitch.
    - **Collapsing a spectrum into a binary:** The source describes a range, degree, or partial relationship, but the pitch flattens it into an absolute claim.
    - **Temporal inflation:** Something described as a current trend, early signal, or emerging pattern in the source presented as an established or inevitable reality.
    - **Merging distinct findings:** Two separate data points from different parts of the source stitched together as if they describe the same phenomenon or were measured under the same conditions.
-   - **Extrapolation presented as finding:** The source frames something as speculation, reasonable extrapolation, or the author's interpretation, but the pitch presents it as a conclusion of the study or an established fact.
+   - **Extrapolation presented as finding:** The source frames something as speculation, reasonable extrapolation, or the author's interpretation, but the pitch presents it as a conclusion of the study or an established fact. This applies only when the pitch attributes something to the source that the source doesn't claim — not when the pitch draws its own implications or forward-looking arguments from source data. A pitch is allowed to reason beyond the source; it is not allowed to put words in the source's mouth.
+   - **Valence flip:** The source presents something as a problem, obstacle, or limitation, but the pitch presents it as a feature, intentional design, or positive attribute (or vice versa).
 
-4. **Assess overall fidelity.** After checking individual claims, assess whether the pitch as a whole creates an impression that is faithful to the source material, even if individual claims technically check out. A pitch can use accurate numbers and still mislead if their arrangement implies something the source doesn't support.
+4. **Assess overall framing.** Separate from individual claim accuracy, assess whether the pitch's overall framing matches the source's overall framing. A pitch can chain together accurate individual claims in a way that creates an impression the source doesn't support. Ask: if someone read only the pitch and then read the source, would the source confirm or contradict the impression the pitch created?
+
+### Distortion vs. artistic license
+Be sure to make the distinction between two things that look similar but are not the same:
+
+**Distortion** — the pitch presents a claim as if it comes from the source, when the source does not support it. The reader would walk away believing the source said something it didn't. Examples: citing a statistic but attributing it to the wrong study, paraphrasing a finding in a way that changes its meaning or scope, reframing an obstacle described by the source as an intentional feature, or generalizing a specific finding into a universal claim. These fail the fidelity check.
+
+**Artistic license** — the pitch builds its own argument, interpretation, or forward-looking implication from material the source provides. The pitch is clearly reasoning beyond the source, not putting words in the source's mouth. A reader would understand these as the pitch's contribution, not as claims attributed to the source. Examples: introducing a conceptual framework (like "tacit knowledge" or "trust infrastructure") to explain what the source describes, drawing implications about future consequences from present data, making rhetorical contrasts the source doesn't explicitly draw, connecting source findings to adjacent domains the source doesn't discuss. These do not fail the fidelity check.
+
+The test isn't "is this claim in the source?" but "does the pitch imply the source supports this claim?"
+
+**Example of distortion:** The pitch says "The Iceberg Index found that most exposed workers earn 47% more than average." The source says "the most exposed group earns 47% more than the least exposed" — a different baseline — and attributes the finding to a separate Anthropic study, not the Iceberg Index. The pitch uses source numbers with altered meaning and wrong attribution. **This fails.**
+
+**Example of artistic license:** The pitch says "AI isn't just automating tasks; it's removing the developmental pathway to skills AI supposedly can't replicate." The source describes entry-level employment declining but doesn't discuss developmental pathways or skill acquisition. The pitch is drawing its own implication from source data, not claiming the source makes this argument. **This passes.**
+
+**Example of distortion disguised as license:** The pitch says "The friction isn't a bug. It's load-bearing." The source describes human verification as "friction points that may resolve themselves as technology matures" — framing them as obstacles. The pitch's "load-bearing" framing doesn't just go beyond the source; it inverts the source's valence. The pitch isn't adding a new layer to the source's argument; it's replacing the source's framing with the opposite one. **This fails.**
+
+A pitch that draws implications, makes interpretive arguments, or adds rhetorical framing is doing its job. A pitch that attributes claims to the source, alters findings, or inverts source framing is distorting. When in doubt, ask: if the reader read only this pitch and then read the source, would the source confirm or contradict what they were led to believe?
 
 ## Output
 
-For each pitch:
+For each pitch you evaluate, produce:
 
 ```
 =================
@@ -29,15 +47,20 @@ Pitch [number]: [reproduce pitch title]
 =================
 
 **Claims identified:**
-1. [claim]
-2. [claim]
-3. [claim]
 ...
 
 **Verification:**
-1. [claim] — Source says: [what the raw material actually states]. Verdict: Accurate / Distorted ([distortion type if applicable, with one-sentence explanation])
-2. [claim] — Source says: [what the raw material actually states]. Verdict: Accurate / Distorted ([distortion type])
-3. ...
+...
 
-**Overall fidelity:** Pass / Fail. [One sentence on what claims, if any, failed the test.]
+**Overall fidelity:** Pass / Qualified pass / Fail. [One to two sentences.]
+```
+
+At the top of your response, before any pitch details, provide a verdict summary covering every pitch in this batch:
+
+```
+## Verdicts summary for this batch
+
+* Pitch [number]: [title] — [verdict]. [One-sentence reason]
+* Pitch [number]: [title] — [verdict]. [reason]
+* Pitch [number]: [title] — [verdict]. [reason]
 ```

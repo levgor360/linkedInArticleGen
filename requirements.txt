@@ -6,3 +6,4 @@ opentelemetry-api
 jupyter
 ipykernel
 arize-phoenix-client
+openai==1.12.0

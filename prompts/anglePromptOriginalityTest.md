@@ -23,17 +23,6 @@ For each final pitch, assess the originality of the bridge between the raw mater
 
 3. **Trace the moment of discovery.** Look at the model's reasoning section. Identify where the connection was formed and describe the chain of thought that led there — what did the model notice first and what did it connect it to, and what intermediate steps led to the final bridge? For high-originality pitches, narrate the chain of reasoning that produced the connection.
 
-4. **Reality check the bridge.** Does the connection the model drew actually hold up?
-  - **Source fidelity:** Identify any specific data points, statistics, or findings cited in the pitch. For each one, verify that it accurately represents what the raw material actually says. Common distortions to watch for:
-    - **Scope shifts:** A finding about one context (e.g., correlation across US states) rephrased as a claim about a different context (e.g., organizational planning tools). The stat is real but applied to a domain it wasn't measured in.
-    - **Causation from correlation:** The source describes an association or co-occurrence, but the pitch presents it as one thing causing another.
-    - **Generalizing from a specific:** A finding about one occupation, sector, or population presented as if it applies universally.
-    - **Collapsing a spectrum into a binary:** The source describes a range or degree, but the pitch flattens it into an absolute claim (e.g., "can't see the problem" when the source says "explains less than 5% of variation").
-    - **Temporal inflation:** Something described as a current trend or early signal in the source presented as an established or inevitable reality in the pitch.
-    - **Merging distinct findings:** Two separate data points from different parts of the source stitched together as if they describe the same phenomenon or were measured under the same conditions.
-   - **Logical integrity:** Does the conclusion actually follow from the premises, or does it rely on false equivalences, unsupported leaps, or superficial parallels that collapse under examination?
-   - **Substantive accuracy:** Does the implication the model draws hold up against what is known about the relevant fields, or does it sound insightful but misrepresent how these domains actually work?
-
 ## Output format
 
 =================
@@ -50,5 +39,3 @@ Pitch [N]: [reproduce the pitch title AND the full 2-3 sentence pitch text exact
 5 — Genuinely original bridge. The focus area revealed something hiding in the material that changes how you understand the raw material itself.
 
 **Reasoning chain:** [2-5 sentences describing the chain of thought that produced the connection. Only include this if the originality score is 4 or higher.]
-
-**Reality check:** [Pass/Fail. If fail, describe in 1-2 sentences what doesn't hold up — whether the bridge distorts the source material, whether the reasoning relies on false equivalences or unsupported leaps, or whether the implications misrepresent how the relevant fields actually work.]
