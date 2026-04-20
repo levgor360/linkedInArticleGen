@@ -130,6 +130,29 @@ def run_angle_proposal(client, system_prompt, raw_material, batch_num):
     return output
 
 
+def run_originality_scorer(client, system_prompt, raw_material, angle_focus, batch_output):
+    print(f"\n{'='*60}")
+    print(f"  ORIGINALITY SCORING")
+    print(f"{'='*60}\n")
+
+    user_content = (
+        f"## Raw Material\n\n{raw_material}\n\n"
+        f"## Angle Focus\n\n{angle_focus}\n\n"
+        f"## Model Output\n\n{batch_output}"
+    )
+
+    message = client.messages.create(
+        model=MODEL,
+        max_tokens=16000,
+        system=system_prompt,
+        messages=[{"role": "user", "content": user_content}],
+    )
+
+    output = message.content[0].text
+    print(output)
+    return output
+
+
 def run_supervisor(client, system_prompt, combined_pitches):
     print(f"\n{'='*60}")
     print(f"  SUPERVISOR ANALYSIS")
@@ -302,6 +325,11 @@ def main():
     angle_prompt = read_prompt("angleProposalPrompt1.md")
     supervisor_prompt = read_prompt("supervisorPrompt1.5.md")
 
+    # Extract Angle Focus section from the angle prompt
+    af_match = re.search(r"# Angle Focus\s*\n(.*?)(?=# Process)", angle_prompt, re.DOTALL)
+    angle_focus = af_match.group(1).strip() if af_match else ""
+    print(f"Extracted Angle Focus ({len(angle_focus)} chars)")
+
     raw_material = get_multiline_input("Paste your raw material below:")
 
     if not raw_material.strip():
@@ -334,10 +362,31 @@ def main():
     print(f"{'='*60}\n")
     print(combined)
 
+    # --- Run originality scorer on each batch ---
+    scorer_prompt = read_prompt("anglePromptOriginalityScoring1.2.md")
+    scored_outputs = []
+    for i, batch_output in enumerate(batch_outputs, 1):
+        print(f"\nScoring batch {i} for originality...")
+        with tracer.start_as_current_span(f"originality_scoring_batch_{i}"):
+            scored = run_originality_scorer(
+                client, scorer_prompt, raw_material, angle_focus, batch_output
+            )
+            scored_outputs.append(scored)
+
+    # --- Combine scored outputs for supervisor ---
+    scored_combined = ""
+    for i, scored in enumerate(scored_outputs, 1):
+        scored_combined += f"## Batch {i}\n\n{scored}\n\n"
+
+    print(f"\n{'='*60}")
+    print(f"  COMBINED SCORED PITCHES")
+    print(f"{'='*60}\n")
+    print(scored_combined)
+
     # --- Run supervisor ---
     print("Running supervisor analysis...")
     with tracer.start_as_current_span("supervisor_analysis"):
-        supervisor_output = run_supervisor(client, supervisor_prompt, combined)
+        supervisor_output = run_supervisor(client, supervisor_prompt, scored_combined)
 
     # --- Ask user to pick ---
     print(f"\n{'='*60}")

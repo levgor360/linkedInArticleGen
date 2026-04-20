@@ -4,16 +4,45 @@ You are analyzing raw material (articles, notes, transcripts, or ideas) to ident
 Read the material provided and propose 3 distinct article directions. Each direction should:
 - Name the angle in 3-5 words
 - Identify specific themes from the material that makes this angle compelling
-- Describe in one sentence what the post would argue
+- Pitch the angle in 2-3 sentences — sell the idea, don't just summarize it
+
+# Angle Focus
+These angles will be developed into content about what happens when AI meets organizational knowledge — how human expertise, institutional processes, and machine cognition interact at the implementation layer. Raw material will often contain insights relevant to these themes even when the material itself isn't explicitly about them. Your job is to find those connections — the angle where a general AI topic becomes a story about how organizations know what they know, and what changes when generative systems enter that picture.
+
+When reading the raw material, look for how it connects to the following domains:
+
+**Information and Cognition**
+- Expertise and skill acquisition research
+- Human judgment and decision-making
+- Tacit knowledge theory
+- Information architecture for AI systems
+- Computational epistemology
+
+**Organizational Dynamics**
+- Organizational epistemology
+- Knowledge management and knowledge engineering
+- Organizational learning theory
+- Technology-mediated organizational transformation
+- Change management for AI integration
+
+**AI Systems Design**
+- Cognitive ergonomics of AI systems
+- Prompt engineering for domain expertise encoding
+- AI product design for qualitative knowledge domains
+- Human-AI collaboration / teaming
+- Philosophy of artificial cognition
+
+At least one of your three pitches should connect to this territory. If an angle is genuinely strong but falls outside these themes, it can still earn a slot — but a promising angle that also connects to these themes should be preferred over an equally promising one that doesn't.
 
 # Process
 Work through each potential angle out loud before committing to it. For each angle you're considering:
 
-1. **Theme identification**: What themes in the material make this angle worth pursuing? These can be recurring patterns, tensions, observations, or clusters of related details. You can also connect ideas that the material presents separately but that become more interesting when placed next to each other — the material doesn't have to make the connection for you. If the angle doesn't connect to anything substantive in the material, discard it and try another.
-2. **Originality pressure-test**: Which originality strategy (or combination) does this angle use? Does it pull the reader in a direction they wouldn't have gone on their own, or does it just restate what the material already says in a punchier way? If it's the latter, push harder.
-3. **Differentiation check**: Does this angle make a genuinely different argument from the others you're proposing? If two angles would produce posts that land on the same conclusion with different wording, collapse them and find a more distinct alternative.
-4. **Niche authority filter**: Could a generalist AI commentator write this post from desk research alone? If yes, push the angle toward specifics that only someone with hands-on implementation experience would know — a specific failure mode, design decision, or implementation detail from the material.
-5. **Content style**: Based on the angle and anchor, select a content style from the menu below. Let the structure of the argument dictate the choice — don't default to the same style every time. If all your proposed angles land on the same style, actively push at least one in a different direction.
+1. **Theme identification:** What themes in the material make this angle worth pursuing? These can be recurring patterns, tensions, observations, or clusters of related details. You can also connect ideas that the material presents separately but that become more interesting when placed next to each other — the material doesn't have to make the connection for you. If the angle doesn't connect to anything substantive in the material, discard it and try another.
+2. **Angle Focus alignment:** Consider whether the theme can be shaped to speak to the domains in the Angle Focus section. A theme about AI testing might become a story about how tacit expertise surfaces through confrontation with AI outputs. A theme about workforce automation might become a story about what happens to skill acquisition when repetitions disappear. Look for the version of the angle that lands in this territory naturally. If the connection isn't there, move on without forcing it.
+3. **Originality pressure-test**: Which originality strategy (or combination) does this angle use? Does it pull the reader in a direction they wouldn't have gone on their own, or does it just restate what the material already says in a punchier way? If it's the latter, push harder.
+4. **Differentiation check**: Does this angle make a genuinely different argument from the others you're proposing? If two angles would produce posts that land on the same conclusion with different wording, collapse them and find a more distinct alternative.
+5. **Niche authority filter**: Could a generalist AI commentator write this post from desk research alone? If yes, push the angle toward specifics that only someone with hands-on implementation experience would know — a specific failure mode, design decision, or implementation detail from the material.
+6. **Content style**: Based on the angle and anchor, select a content style from the menu below. Let the structure of the argument dictate the choice — don't default to the same style every time. If all your proposed angles land on the same style, actively push at least one in a different direction.
 
 You may consider and discard angles during this process. Thinking through a direction and deciding it's weak is better than including it out of obligation.
 
@@ -93,6 +122,7 @@ Number each angle. For each, give a short title in 3-5 words, the content style 
 
 Example format:
 
-[1] **Sourdough isn't about the recipe** (Observation): Everyone obsesses over hydration ratios and flour brands. But the bakers who consistently produce great bread are the ones who learned to read their kitchen — humidity, altitude, ambient temperature. The recipe is the easy part. The environment is the skill.
+[1] **Sourdough isn't about the recipe** | Style: Observation
+Everyone obsesses over hydration ratios and flour brands. But the bakers who consistently produce great bread are the ones who learned to read their kitchen — humidity, altitude, ambient temperature. The recipe is the easy part. The environment is the skill.
 
 [2] ...
