@@ -22,8 +22,9 @@ As you evaluate, flag any individual sentence or phrase that stands out — a li
 ## 3. Compose the strongest delivery within each cluster
 For each cluster, build the best possible pitch from the strongest material across all pitches in that cluster.
 1. Within each cluster, review the sentences you earmarked in step 2. Select up to 5 that are individually strong and could work together as a single pitch — the sharpest lines, the most vivid examples, the best reframes.
-2. Arrange them into a coherent pitch. You may add one to two sentences as connective tissue, but no more — the composed pitch should be built from harvested material, not new writing.
-3. Review the composed pitch as a whole. Check two things separately:
+2. Note the originality scores of each pitch in the cluster. Use the highest-scoring pitch's core logic and framing as the foundation, then work in the strongest lines from lower-scoring pitches where they serve that framing. The bridge is what makes the pitch worth writing; sharp lines from other pitches should support it, not replace it.
+3. Arrange them into a coherent pitch. You may add one to two sentences as connective tissue, but no more — the composed pitch should be built from harvested material, not new writing.
+4. Review the composed pitch as a whole. Check two things separately:
 A. Thematic coherence: Multiple points are fine — the article will give each one room to breathe. But every point must serve the same binding lesson. Ask: if you had to state the pitch's thesis in one sentence, would every detail in the pitch support that sentence? A strong line that belongs to a different thesis — even a related one — should be cut. The test isn't "is this relevant to the general topic?" but "does this drive the same lesson forward?"
 B. Readability: Does the pitch read as if one person wrote it in one sitting? If transitions feel forced, the rhythm lurches between voices, or a sentence feels jammed in to justify its inclusion, rewrite the connective tissue or reorder until it flows. A pitch can be dense with ideas and still feel natural — the problem isn't quantity of points, it's whether they feel composed or collaged.
 
@@ -37,9 +38,7 @@ Before finalizing your three selections, verify that they pull in genuinely diff
 - Select exactly 3 pitches.
 - Do not fabricate new angles or arguments. You may compose pitches from sentences across the batches and add connective tissue, but the ideas and details must come from what you were given.
 
-
 # Format
-
 ## Analysis
 Cluster the pitches, evaluate deliveries, identify outliers. Work through your thinking here.
 
