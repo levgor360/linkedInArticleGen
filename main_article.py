@@ -9,6 +9,7 @@ for var in ("ALL_PROXY", "all_proxy"):
 
 from dotenv import load_dotenv
 import anthropic
+from openai import OpenAI
 
 load_dotenv()
 
@@ -149,6 +150,31 @@ def run_originality_scorer(client, system_prompt, raw_material, angle_focus, bat
     )
 
     output = message.content[0].text
+    print(output)
+    return output
+
+
+def run_fidelity_check(system_prompt, raw_material, selected_pitches):
+    print(f"\n{'='*60}")
+    print(f"  FIDELITY CHECK")
+    print(f"{'='*60}\n")
+
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+    user_content = (
+        f"## Raw Material\n\n{raw_material}\n\n"
+        f"## Selected Pitches\n\n{selected_pitches}"
+    )
+
+    response = client.chat.completions.create(
+        model="gpt-5.2",
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_content},
+        ],
+    )
+
+    output = response.choices[0].message.content
     print(output)
     return output
 
@@ -388,12 +414,18 @@ def main():
     with tracer.start_as_current_span("supervisor_analysis"):
         supervisor_output = run_supervisor(client, supervisor_prompt, scored_combined)
 
+    # --- Run fidelity check ---
+    fidelity_prompt = read_prompt("fidelityTest1.6.md")
+    print("\nRunning fidelity check...")
+    with tracer.start_as_current_span("fidelity_check"):
+        fidelity_output = run_fidelity_check(fidelity_prompt, raw_material, supervisor_output)
+
     # --- Ask user to pick ---
     print(f"\n{'='*60}")
     choice = input("\nPick an angle by number: ")
     print(f"\nYou selected angle [{choice}].")
 
-    selected_pitch = extract_pitch_by_number(supervisor_output, choice)
+    selected_pitch = extract_pitch_by_number(fidelity_output, choice)
     if not selected_pitch:
         print(f"Could not extract pitch [{choice}] from supervisor output.")
         print("Using full supervisor output as selected pitch.")
