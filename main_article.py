@@ -91,27 +91,16 @@ def extract_pitch_by_number(supervisor_output, number):
     return None
 
 
-def run_pitch_modification(client, system_prompt, current_pitch, feedback, raw_material=None):
-    if raw_material:
-        user_content = (
-            f"## Current Pitch\n\n{current_pitch}\n\n"
-            f"## Feedback\n\n{feedback}\n\n"
-            f"## Raw Material\n\n{raw_material}"
-        )
-    else:
-        user_content = (
-            f"## Current Pitch\n\n{current_pitch}\n\n"
-            f"## Feedback\n\n{feedback}"
-        )
-
-    message = client.messages.create(
+def run_pitch_modification(client, system_prompt, history):
+    response = client.messages.create(
         model=MODEL,
         max_tokens=16000,
         system=system_prompt,
-        messages=[{"role": "user", "content": user_content}],
+        messages=history,
     )
-
-    return message.content[0].text
+    assistant_reply = response.content[0].text
+    history.append({"role": "assistant", "content": assistant_reply})
+    return history
 
 
 def run_angle_proposal(client, system_prompt, raw_material, batch_num):
@@ -433,33 +422,52 @@ def main():
 
     # --- Pitch modification loop ---
     pitch_mod_prompt = read_prompt("pitchModPrompt1.4.md")
-    current_pitch = selected_pitch
-    revision_count = 0
+    pitch_history = []
+    first_pitch_input = True
+
+    print(f"\n{'='*60}")
+    print(f"  SELECTED PITCH")
+    print(f"{'='*60}\n")
+    print(selected_pitch)
+    print(f"\n{'='*60}")
 
     while True:
-        print(f"\n{'='*60}")
-        print(f"  SELECTED PITCH")
-        print(f"{'='*60}\n")
-        print(current_pitch)
-        print(f"\n{'='*60}")
         feedback = input("\nAny changes? (type 'next' to proceed): ")
 
         if feedback.strip().lower() == "next":
             break
 
-        revision_count += 1
+        if first_pitch_input:
+            message_content = (
+                f"## Selected Pitch\n\n{selected_pitch}\n\n"
+                f"## Raw Material\n\n{raw_material}\n\n"
+                f"## Feedback\n\n{feedback}"
+            )
+            first_pitch_input = False
+        else:
+            message_content = feedback
+
+        pitch_history.append({"role": "user", "content": message_content})
+
         print("\nRevising pitch...")
         with tracer.start_as_current_span("pitch_modification"):
-            if revision_count == 1:
-                current_pitch = run_pitch_modification(
-                    client, pitch_mod_prompt, current_pitch, feedback, raw_material
-                )
-            else:
-                current_pitch = run_pitch_modification(
-                    client, pitch_mod_prompt, current_pitch, feedback
-                )
+            pitch_history = run_pitch_modification(
+                client, pitch_mod_prompt, pitch_history
+            )
 
-    final_pitch = current_pitch
+        print(pitch_history[-1]["content"])
+
+    # Extract final pitch from ## Current Pitch section of last assistant message
+    if pitch_history:
+        last_message = pitch_history[-1]["content"]
+        parts = last_message.split("## Current Pitch")
+        if len(parts) > 1:
+            final_pitch = parts[-1].strip()
+        else:
+            final_pitch = last_message.strip()
+    else:
+        final_pitch = selected_pitch
+
     print(f"\n{'='*60}")
     print(f"  FINAL PITCH")
     print(f"{'='*60}\n")
