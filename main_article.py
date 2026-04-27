@@ -420,6 +420,15 @@ def main():
         print("Using full supervisor output as selected pitch.")
         selected_pitch = supervisor_output
 
+    # Extract runner-up pitches (the two the user didn't pick)
+    all_pitch_numbers = ["1", "2", "3"]
+    runner_up_numbers = [n for n in all_pitch_numbers if n != choice]
+    runner_up_pitches = []
+    for n in runner_up_numbers:
+        pitch = extract_pitch_by_number(fidelity_output, n)
+        if pitch:
+            runner_up_pitches.append(pitch)
+
     # --- Pitch modification loop ---
     pitch_mod_prompt = read_prompt("pitchModPrompt1.4.md")
     pitch_history = []
@@ -429,7 +438,16 @@ def main():
     print(f"  SELECTED PITCH")
     print(f"{'='*60}\n")
     print(selected_pitch)
-    print(f"\n{'='*60}")
+    if runner_up_pitches:
+        print(f"\n{'='*60}")
+        print(f"  RUNNER-UP PITCHES")
+        print(f"{'='*60}\n")
+        for rp in runner_up_pitches:
+            print(rp)
+            print()
+    print(f"{'='*60}")
+
+    runner_ups_block = "\n\n".join(runner_up_pitches) if runner_up_pitches else ""
 
     while True:
         feedback = input("\nAny changes? (type 'next' to proceed): ")
@@ -440,6 +458,7 @@ def main():
         if first_pitch_input:
             message_content = (
                 f"## Selected Pitch\n\n{selected_pitch}\n\n"
+                f"## Runner-Up Pitches\n\n{runner_ups_block}\n\n"
                 f"## Raw Material\n\n{raw_material}\n\n"
                 f"## Feedback\n\n{feedback}"
             )
