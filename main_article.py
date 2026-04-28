@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import re
+from datetime import datetime
 
 # Unset ALL_PROXY to avoid connection issues (keep http/https proxy for T430)
 for var in ("ALL_PROXY", "all_proxy"):
@@ -351,67 +352,104 @@ def main():
         print("No material provided. Exiting.")
         sys.exit(1)
 
-    # --- Run 3 angle proposal batches ---
-    print(f"\nRunning {NUM_BATCHES} angle proposal batches...")
+    # --- Refocus loop: steps 1-4 + user pick ---
+    focus_directive = None
+    refocus_iteration = 0
 
-    batch_outputs = []
-    extracted_pitches = []
+    while True:
+        refocus_iteration += 1
+        is_refocus = focus_directive is not None
 
-    for i in range(1, NUM_BATCHES + 1):
-        if i > 1:
-            print(f"\nWaiting {DELAY_BETWEEN_BATCHES}s before batch {i}...")
-            time.sleep(DELAY_BETWEEN_BATCHES)
-
-        with tracer.start_as_current_span(f"angle_proposal_batch_{i}"):
-            output = run_angle_proposal(client, angle_prompt, raw_material, i)
-            batch_outputs.append(output)
-            extracted_pitches.append(extract_final_pitches(output))
-
-    # --- Combine extracted pitches ---
-    combined = ""
-    for i, pitches in enumerate(extracted_pitches, 1):
-        combined += f"## Batch {i}\n\n{pitches}\n\n"
-
-    print(f"\n{'='*60}")
-    print(f"  COMBINED FINAL PITCHES")
-    print(f"{'='*60}\n")
-    print(combined)
-
-    # --- Run originality scorer on each batch ---
-    scorer_prompt = read_prompt("anglePromptOriginalityScoring1.2.md")
-    scored_outputs = []
-    for i, batch_output in enumerate(batch_outputs, 1):
-        print(f"\nScoring batch {i} for originality...")
-        with tracer.start_as_current_span(f"originality_scoring_batch_{i}"):
-            scored = run_originality_scorer(
-                client, scorer_prompt, raw_material, angle_focus, batch_output
+        # Build the proposal input: prepend focus directive if present
+        if is_refocus:
+            proposal_input = (
+                f"## Focus Directive\n"
+                f"All three pitches should explore angles related to: {focus_directive}\n\n"
+                f"## Raw Material\n"
+                f"{raw_material}"
             )
-            scored_outputs.append(scored)
+            span_prefix = f"refocus{refocus_iteration}_"
+            print(f"\n{'='*60}")
+            print(f"  REFOCUS ITERATION {refocus_iteration}")
+            print(f"  Focus: {focus_directive}")
+            print(f"{'='*60}")
+        else:
+            proposal_input = raw_material
+            span_prefix = ""
 
-    # --- Combine scored outputs for supervisor ---
-    scored_combined = ""
-    for i, scored in enumerate(scored_outputs, 1):
-        scored_combined += f"## Batch {i}\n\n{scored}\n\n"
+        # --- Run 3 angle proposal batches ---
+        print(f"\nRunning {NUM_BATCHES} angle proposal batches...")
 
-    print(f"\n{'='*60}")
-    print(f"  COMBINED SCORED PITCHES")
-    print(f"{'='*60}\n")
-    print(scored_combined)
+        batch_outputs = []
+        extracted_pitches = []
 
-    # --- Run supervisor ---
-    print("Running supervisor analysis...")
-    with tracer.start_as_current_span("supervisor_analysis"):
-        supervisor_output = run_supervisor(client, supervisor_prompt, scored_combined)
+        for i in range(1, NUM_BATCHES + 1):
+            if i > 1:
+                print(f"\nWaiting {DELAY_BETWEEN_BATCHES}s before batch {i}...")
+                time.sleep(DELAY_BETWEEN_BATCHES)
 
-    # --- Run fidelity check ---
-    fidelity_prompt = read_prompt("fidelityTest1.6.md")
-    print("\nRunning fidelity check...")
-    with tracer.start_as_current_span("fidelity_check"):
-        fidelity_output = run_fidelity_check(fidelity_prompt, raw_material, supervisor_output)
+            with tracer.start_as_current_span(f"{span_prefix}angle_proposal_batch_{i}"):
+                output = run_angle_proposal(client, angle_prompt, proposal_input, i)
+                batch_outputs.append(output)
+                extracted_pitches.append(extract_final_pitches(output))
 
-    # --- Ask user to pick ---
-    print(f"\n{'='*60}")
-    choice = input("\nPick an angle by number: ")
+        # --- Combine extracted pitches ---
+        combined = ""
+        for i, pitches in enumerate(extracted_pitches, 1):
+            combined += f"## Batch {i}\n\n{pitches}\n\n"
+
+        print(f"\n{'='*60}")
+        print(f"  COMBINED FINAL PITCHES")
+        print(f"{'='*60}\n")
+        print(combined)
+
+        # --- Run originality scorer on each batch ---
+        scorer_prompt = read_prompt("anglePromptOriginalityScoring1.2.md")
+        scored_outputs = []
+        for i, batch_output in enumerate(batch_outputs, 1):
+            print(f"\nScoring batch {i} for originality...")
+            with tracer.start_as_current_span(f"{span_prefix}originality_scoring_batch_{i}"):
+                scored = run_originality_scorer(
+                    client, scorer_prompt, raw_material, angle_focus, batch_output
+                )
+                scored_outputs.append(scored)
+
+        # --- Combine scored outputs for supervisor ---
+        scored_combined = ""
+        for i, scored in enumerate(scored_outputs, 1):
+            scored_combined += f"## Batch {i}\n\n{scored}\n\n"
+
+        print(f"\n{'='*60}")
+        print(f"  COMBINED SCORED PITCHES")
+        print(f"{'='*60}\n")
+        print(scored_combined)
+
+        # --- Run supervisor ---
+        print("Running supervisor analysis...")
+        with tracer.start_as_current_span(f"{span_prefix}supervisor_analysis"):
+            supervisor_output = run_supervisor(client, supervisor_prompt, scored_combined)
+
+        # --- Run fidelity check ---
+        fidelity_prompt = read_prompt("fidelityTest1.6.md")
+        print("\nRunning fidelity check...")
+        with tracer.start_as_current_span(f"{span_prefix}fidelity_check"):
+            fidelity_output = run_fidelity_check(fidelity_prompt, raw_material, supervisor_output)
+
+        # --- Ask user to pick ---
+        print(f"\n{'='*60}")
+        while True:
+            choice = input("\nPick an angle by number, or describe a topic focus to regenerate: ")
+            if choice.strip() == "":
+                continue
+            break
+
+        if choice.strip() in ("1", "2", "3"):
+            break
+
+        # User typed a focus directive — store it and loop back
+        focus_directive = choice.strip()
+        print(f"\nRefocusing with directive: {focus_directive}")
+
     print(f"\nYou selected angle [{choice}].")
 
     selected_pitch = extract_pitch_by_number(fidelity_output, choice)
@@ -499,6 +537,13 @@ def main():
         article_versions = run_article_generator(
             client, article_gen_prompt, final_pitch, raw_material
         )
+
+    # --- Save drafts to file ---
+    drafts_filename = f"drafts_output_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+    drafts_path = os.path.join(os.path.dirname(__file__), drafts_filename)
+    with open(drafts_path, "w") as f:
+        f.write(article_versions)
+    print(f"\nDrafts saved to {drafts_filename}")
 
     # --- Assembly workbench ---
     assemble_prompt = read_prompt("assemblePrompt3.md")
