@@ -1,0 +1,108 @@
+Version 1:
+**Delivery approach:** Ground-level, reflective
+
+There's a moment in every AI implementation where the expert pauses mid-sentence.
+
+They're explaining how they evaluate a situation — a loan application, a customer complaint, a design spec — and they hit something they can't articulate. "I just... know." A shrug. Maybe a laugh. "You do it long enough, you develop a feel for it."
+
+That feel is the problem.
+
+The industrial revolution faced something similar. Craft knowledge had to become systematic knowledge before machines could use it. A master weaver knew how tight to pull the thread, how to adjust for humidity, when a loom was about to jam. That knowledge lived in hands and instincts, not manuals.
+
+Some of it transferred. Engineers studied the craftsmen, documented the patterns, built the adjustments into the machines. But some of it evaporated. The tacit part — the judgment calls, the pattern recognition that nobody thought to articulate — simply didn't survive the translation.
+
+AI faces the same bottleneck.
+
+The explicit part of expertise travels fine. Policies, procedures, checklists, decision trees — anything already written down can be fed into a system. But the tacit part resists capture. It's the thing your best people do that they've never had to explain because nobody asked them to until now.
+
+Here's a framework for thinking about what will and won't survive the pipeline:
+
+**Layer 1: Documented Knowledge**
+This is the explicit stuff. Policies, procedures, standard operating processes. If it's in a handbook or a wiki, it's in Layer 1. AI can ingest this easily. The challenge here isn't capture — it's currency. Is your documentation actually up to date, or does it describe how things worked three years ago?
+
+**Layer 2: Articulable Knowledge**
+This is expertise your people can explain if you ask them to. They've never written it down, but they can walk you through their reasoning. "When I see X, I check for Y first because Z tends to follow." This layer is recoverable — but only if you create the conditions for recovery. Structured interviews. Process mapping sessions. Someone patient enough to keep asking "why" until the reasoning is externalized.
+
+**Layer 3: Tacit Knowledge**
+This is the feel. The instinct. The thing experts can't articulate even when they try. "I just know this client is going to be difficult" — based on what? A pause in the email? A pattern they've absorbed across hundreds of similar situations? This layer is where the most valuable judgment lives, and it's where AI systems most often fail. Not because the AI isn't smart enough, but because the knowledge was never available for capture in the first place.
+
+The question isn't whether AI can handle your expertise. It's which layer most of your competitive advantage actually lives in.
+
+If it's Layer 1, you're probably fine — assuming your documentation isn't a mess.
+
+If it's Layer 2, you have work to do, but it's recoverable work. The knowledge exists; it just needs to be extracted before your AI project can access it.
+
+If it's Layer 3, you're facing something harder. You'll need to build deliberate mechanisms that force tacit knowledge to the surface — and accept that some of it may not survive the translation.
+
+I've watched organizations go through this discovery and realize their most critical knowledge was never documented because it lived in judgment calls nobody thought to examine. The AI project becomes an archaeology project. Sometimes what they find is transferable. Sometimes it's not.
+
+Which layer does your most irreplaceable expertise live in?
+
+---
+
+Version 2:
+**Delivery approach:** High-altitude, calm authority
+
+The explicit part of your expertise will transfer to AI just fine. The tacit part will silently disappear.
+
+This isn't a failure of technology. It's a translation problem as old as industrialization itself.
+
+When the industrial revolution began mechanizing production, craft knowledge had to become systematic knowledge before machines could use it. Engineers studied master craftsmen and documented what they could observe. Some of that knowledge transferred successfully. Some of it evaporated — the judgment calls, the instincts, the pattern recognition that nobody thought to articulate because it had never needed articulating.
+
+AI systems face the same bottleneck. They need access to reasoning patterns that experts can't explain until a machine forces them to try.
+
+Here's how to think about what survives the pipeline:
+
+**What transfers easily:**
+- Documented procedures and policies
+- Explicit decision criteria
+- Anything already written down
+
+**What transfers with effort:**
+- Knowledge experts can articulate if pressed
+- Reasoning they've never documented but can walk you through
+- The "why" behind decisions, surfaced through structured interviews
+
+**What resists capture:**
+- Instinct. Feel. The shrug followed by "you do it long enough, you just know."
+- Pattern recognition absorbed across thousands of cases
+- Judgment that can't be decomposed into steps
+
+Most organizations discover their competitive advantage lives in that third category. The knowledge was never documented because it didn't need to be — it lived in the heads of people who'd been doing the work for decades.
+
+When AI implementation reveals this gap, organizations face a choice. They can treat it as a data problem and throw more documentation at it. Or they can recognize that some knowledge requires fundamentally different extraction methods — and that some of it may not survive the translation at all.
+
+The companies getting this right aren't the ones with the best AI. They're the ones who've done the archaeological work of surfacing tacit expertise before the AI project begins.
+
+What's the piece of your organization's knowledge that everyone relies on but nobody has ever written down?
+
+---
+
+Version 3:
+**Delivery approach:** Mid-level, wry and conversational
+
+Last month I was running a discovery session with a client's operations team. We were mapping out their claims review process — the kind of thing AI should be good at, right? Documents in, decisions out.
+
+An hour in, one of the senior reviewers said something that stopped the room: "Well, yeah, but you also have to know when a file is *lying* to you."
+
+Everyone laughed. I asked her to explain.
+
+She couldn't. Not really. Something about the way certain claims are organized. A pattern she'd noticed over fifteen years. She could spot it instantly, but when pressed for the actual signals? "I just... know."
+
+That right there is the AI problem nobody wants to talk about.
+
+The explicit stuff transfers fine. Policies, procedures, decision trees — if it's written down, AI can work with it. The tacit stuff? The judgment calls, the instinct, the feel that develops over years? That resists capture in ways that break implementation timelines.
+
+The industrial revolution ran into this exact problem. Craft knowledge had to become systematic knowledge before machines could use it. Engineers studied craftsmen, documented what they observed, built adjustments into the machines. Some of it transferred. Some of it just... vanished. The tacit part evaporated because it had never been articulated in the first place.
+
+So here's what I've started telling clients:
+
+Before you build the AI, do an expertise audit. Figure out how much of your competitive advantage is documented (easy), how much is articulable if someone asks (recoverable), and how much lives in instinct nobody can explain (hard).
+
+If your best people can walk you through their reasoning when pressed — even if it's never been written down — that's recoverable. You need structured extraction, not AI magic. If your best people shrug and say "you do it long enough, you develop a feel for it" — that's the knowledge at risk.
+
+The AI project becomes an archaeology project. Sometimes you excavate treasure. Sometimes you find out the treasure was never buried in the first place — it was just alive in someone's head, and now you have to decide what that means for your implementation.
+
+My client's claims reviewer? We spent three more sessions just trying to get her to articulate what "lying" meant. We got maybe 60% of it. The other 40% is still a shrug.
+
+What's the piece of expertise in your organization that everyone relies on but nobody has ever had to explain?

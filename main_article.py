@@ -208,6 +208,28 @@ def run_article_generator(client, system_prompt, final_pitch, raw_material):
     return output
 
 
+def run_hook_generator(client, system_prompt, final_draft, raw_material):
+    print(f"\n{'='*60}")
+    print(f"  HOOK GENERATOR")
+    print(f"{'='*60}\n")
+
+    user_content = (
+        f"## Post Body\n\n{final_draft}\n\n"
+        f"## Raw Material\n\n{raw_material}"
+    )
+
+    message = client.messages.create(
+        model=MODEL,
+        max_tokens=16000,
+        system=system_prompt,
+        messages=[{"role": "user", "content": user_content}],
+    )
+
+    output = message.content[0].text
+    print(output)
+    return output
+
+
 def expand_shortcodes(user_input):
     SHORTCODE_EXPANSIONS = {
         "-v": (
@@ -552,6 +574,44 @@ def main():
         final_draft = run_assemble_session(
             client, assemble_prompt, raw_material, article_versions
         )
+
+    # --- Hook generator ---
+    hook_gen_prompt = read_prompt("hookGeneratePrompt4.md")
+    print("\nGenerating hooks...")
+    with tracer.start_as_current_span("hook_generation"):
+        hook_output = run_hook_generator(
+            client, hook_gen_prompt, final_draft, raw_material
+        )
+
+    print(f"\n{'='*60}")
+    print(f"  HOOK OPTIONS")
+    print(f"{'='*60}\n")
+    print(hook_output)
+
+    while True:
+        choice = input("\nPick a hook by number (1-5): ")
+        if choice.strip() == "":
+            continue
+        if choice.strip() in ("1", "2", "3", "4", "5"):
+            break
+        print("Please enter a number 1-5.")
+
+    hook_number = choice.strip()
+    hook_match = re.search(
+        rf'\[{hook_number}\]\s*\([^)]*\):\n(.+?)(?=\n\[|\Z)',
+        hook_output,
+        re.DOTALL,
+    )
+    if hook_match:
+        selected_hook = hook_match.group(1).strip()
+    else:
+        print("Could not extract hook text automatically. Using full block.")
+        selected_hook = hook_output
+
+    print(f"\n{'='*60}")
+    print(f"  SELECTED HOOK")
+    print(f"{'='*60}\n")
+    print(selected_hook)
 
 
 if __name__ == "__main__":
