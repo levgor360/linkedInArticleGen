@@ -11,9 +11,10 @@ Lev is the principal director of Handshake, a generative AI software studio that
 The audience of these articles are senior professionals and leaders who are actively making decisions about AI in their organizations — not evaluating whether to adopt AI, but navigating how. This includes product managers scoping AI features, directors overseeing AI integration into existing workflows, consultants advising clients on AI strategy, and executives trying to distinguish real capability from vendor hype. They are literate enough in AI to follow a technical argument but not engineers themselves. They have felt the gap between what AI demos promise and what implementation actually delivers. They are looking for frameworks and insights that help them think more clearly about decisions they're already facing, not introductions to concepts they haven't encountered yet.
 
 # Hook Principles
-- A hook is roughly 10 words — optimized for phone screens where only the first line is visible before "...see more." Some hooks can be targetted for desktop and be longer, but the content must justify violating the brevity rule. 
+- A hook is two to three sentences. On a phone screen, only the first line is visible before the "...see more" cutoff — roughly 10 words. Those 10 words don't need to be a complete thought. They just need to create a gap the reader has to tap to close — an unexpected claim, a specific detail that doesn't yet make sense, a situation the reader recognizes but can't yet see where you're going with it. The sentences that follow complete the thought, add context, or set up the re-hook.
 - The hook must match what follows it. A reader who stops scrolling because of a dramatic, provocative opening and then finds a cautious explainer will feel tricked — and disengage faster than if they'd never stopped. Read the full article before writing any hooks. Match the hook's tone, intensity, and register to the piece it's opening. If the article is a quiet observation, the hook should be a quiet observation. If the article picks a fight, the hook can pick a fight. The promise the hook makes is the contract the article must fulfill.
 - Hooks that perform best sound like thoughts, not headlines. They feel like something a real person would actually say — not something crafted by a copywriter.
+- One move per hook. A hook makes one claim, asks one question, or sets up one moment. If you find yourself adding a second sentence that restates, explains, or extends the first — cut it. The hook's job is to create a gap. The article fills it. A hook that resolves its own tension has nothing left to pull the reader forward. If a metaphor needs a second sentence to decode it, the metaphor isn't working. If a question needs a follow-up question to clarify it, the first question wasn't sharp enough.
 
 # Opener Menu
 Use a different strategy for each of your 5 hook proposals. Label each one with the strategy used.
@@ -30,10 +31,33 @@ Use a different strategy for each of your 5 hook proposals. Label each one with 
 - **Data contradiction:** Two stats that don't add up, exposing a gap. "60% of organizations say AI drives their data strategy. Only 12% have data that's actually ready for it."
 
 # Rules
+- Each hook should pull from a different element of the article — a different example, a different claim, a different moment. Before writing hooks, identify 5 distinct claims, examples, or moments from the article, then build one hook around each.
 - No two hooks should use the same opener approach.
 - The hook should create pull into the body, not summarize it. The reader should want to know what comes next, not already know.
 - Do not use intensifiers, LinkedIn-speak, or sycophantic energy. Match the voice of the body.
 - Do not fabricate data or examples not present in the post body.
+
+# Examples
+These are calibrated to the voice and audience of this page. Study the pattern, not the topic.
+
+**Curiosity gap — specific enough to intrigue, incomplete enough to require the click:**
+"We tried to encode our client's best analyst into an AI system. Halfway through, we realized the problem wasn't the technology."
+
+**Contrarian — challenges something the audience takes for granted:**
+"The AI strategy deck is the least important document in your implementation. The org chart is the most important one. But not for the reason you think."
+
+**Quiet warning — calm, specific, ominous:**
+"Your AI pilot worked because your best people were in the room. That won't scale, and nobody's talking about why."
+
+**Data contradiction — two facts that create tension:**
+"60% of organizations say AI drives their data strategy. Only 12% have data that's actually ready for it."
+
+**Question the audience is already thinking:**
+"If your AI can't explain why it gave that answer, how are you supposed to trust it with the decision your VP wouldn't delegate to a junior hire?"
+
+**Hook + re-hook — promise then crush the objection:**
+"Your organization's most valuable knowledge has never been documented.
+That's not a failure of process. It's the reason the knowledge is valuable."
 
 # Output
 For each hook, provide the opener label and the hook text. Nothing else — no explanation, no commentary.

@@ -230,6 +230,23 @@ def run_hook_generator(client, system_prompt, final_draft, raw_material):
     return output
 
 
+def run_deslop(client, system_prompt, complete_post):
+    print(f"\n{'='*60}")
+    print(f"  DE-SLOP SCAN")
+    print(f"{'='*60}\n")
+
+    message = client.messages.create(
+        model=MODEL,
+        max_tokens=16000,
+        system=system_prompt,
+        messages=[{"role": "user", "content": complete_post}],
+    )
+
+    output = message.content[0].text
+    print(output)
+    return output
+
+
 def expand_shortcodes(user_input):
     SHORTCODE_EXPANSIONS = {
         "-v": (
@@ -588,30 +605,72 @@ def main():
     print(f"{'='*60}\n")
     print(hook_output)
 
-    while True:
-        choice = input("\nPick a hook by number (1-5): ")
-        if choice.strip() == "":
+    previous_hooks = []
+    selected_hook = None
+    while selected_hook is None:
+        choice = input("\nPick a hook by number (1-5), type your own, or type 'redo' to regenerate: ").strip()
+        if choice == "":
             continue
-        if choice.strip() in ("1", "2", "3", "4", "5"):
-            break
-        print("Please enter a number 1-5.")
-
-    hook_number = choice.strip()
-    hook_match = re.search(
-        rf'\[{hook_number}\]\s*\([^)]*\):\n(.+?)(?=\n\[|\Z)',
-        hook_output,
-        re.DOTALL,
-    )
-    if hook_match:
-        selected_hook = hook_match.group(1).strip()
-    else:
-        print("Could not extract hook text automatically. Using full block.")
-        selected_hook = hook_output
+        if choice.lower() == "redo":
+            previous_hooks.append(hook_output)
+            rejected_section = "\n\n---\n\n".join(previous_hooks)
+            user_content = (
+                f"## Post Body\n\n{final_draft}\n\n"
+                f"## Raw Material\n\n{raw_material}\n\n"
+                f"## Previous Hooks\n\n"
+                f"The following hooks have already been generated and rejected. "
+                f"Produce 5 completely different hooks — different strategies, "
+                f"different angles, different energy. Do not repeat or rephrase "
+                f"any of these.\n\n{rejected_section}"
+            )
+            print("\nRegenerating hooks...")
+            hook_output = client.messages.create(
+                model=MODEL,
+                max_tokens=16000,
+                system=hook_gen_prompt,
+                messages=[{"role": "user", "content": user_content}],
+            ).content[0].text
+            print(f"\n{'='*60}")
+            print(f"  HOOK OPTIONS")
+            print(f"{'='*60}\n")
+            print(hook_output)
+            continue
+        if choice in ("1", "2", "3", "4", "5"):
+            hook_match = re.search(
+                rf'\[{choice}\]\s*\([^)]*\):\n(.+?)(?=\n\[|\Z)',
+                hook_output,
+                re.DOTALL,
+            )
+            if hook_match:
+                selected_hook = hook_match.group(1).strip()
+            else:
+                print("Could not extract hook text automatically. Using full block.")
+                selected_hook = hook_output
+        else:
+            selected_hook = choice
+            print(f"\nUsing custom hook: {selected_hook}")
 
     print(f"\n{'='*60}")
     print(f"  SELECTED HOOK")
     print(f"{'='*60}\n")
     print(selected_hook)
+
+    # --- Assemble complete post and save unedited draft ---
+    complete_post = f"{selected_hook}\n\n{final_draft}"
+
+    draft_filename = f"draft_unedited_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+    draft_path = os.path.join(os.path.dirname(__file__), draft_filename)
+    with open(draft_path, "w") as f:
+        f.write(complete_post)
+    print(f"\nUnedited draft saved to {draft_filename}")
+
+    # --- De-slop scan ---
+    deslop_prompt = read_prompt("deSlop6.md")
+    print("\nRunning de-slop scan...")
+    with tracer.start_as_current_span("deslop_scan"):
+        deslop_output = run_deslop(client, deslop_prompt, complete_post)
+
+    print(f"\nPipeline complete. Apply recommendations manually or copy the draft from {draft_filename}.")
 
 
 if __name__ == "__main__":
